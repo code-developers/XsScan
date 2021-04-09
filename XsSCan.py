@@ -192,4 +192,7 @@ def findxss(firstDomains):
         color.log(logging.INFO, color.RED + color.BOLD,
                   '\tNo link found, exiting')
 
+firstDomains = initializeAndFind()
+findxss(firstDomains)
+
          
