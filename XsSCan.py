@@ -54,3 +54,38 @@ payloads to search for XSS vulnerabilities. XSS in many high
 profile websites and educational institutes has been found
 by using this very tool.
 """ + color.END
+
+
+logger = logging.getLogger(__name__)
+lh = logging.StreamHandler()  # Handler for the logger
+logger.addHandler(lh)
+formatter = logging.Formatter('[%(asctime)s] %(message)s', datefmt='%H:%M:%S')
+lh.setFormatter(formatter)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-u', action='store', dest='url',
+                    help='The URL to analyze')
+parser.add_argument('-e', action='store_true', dest='compOn',
+                    help='Enable comprehensive scan')
+parser.add_argument('-v', action='store_true', dest='verbose',
+                    help='Enable verbose logging')
+parser.add_argument('-c', action='store', dest='cookies',
+                    help='Space separated list of cookies',
+                    nargs='+', default=[])
+results = parser.parse_args()
+
+logger.setLevel(logging.DEBUG if results.verbose else logging.INFO)
+
+
+def testPayload(payload, p, link):
+    br.form[str(p.name)] = payload
+    br.submit()
+    # if payload is found is response, we have xss
+    if payload in br.response().read():
+        color.log(logging.DEBUG, color.BOLD + color.GREEN, 'XSS found!')
+        report = 'Link: %s, Payload: %s, Element: %s' % (str(link),
+                                                         payload, str(p.name))
+        color.log(logging.INFO, color.BOLD + color.GREEN, report)
+        xssLinks.append(report)
+    br.back()
+
