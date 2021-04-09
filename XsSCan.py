@@ -32,3 +32,25 @@ class color:
     @staticmethod
     def log(lvl, col, msg):
         logger.log(lvl, col + msg + color.END)
+
+
+print color.BOLD + color.RED + """
+GitHub: https://github.com/code-developers/XsSCan
+""" + color.END
+print color.BOLD + color.YELLOW + """
+Usage: XsSCan.py -u website.com (Not www.website.com OR http://www.website.com)
+Comprehensive Scan: python XsSCan.py -u website.com -e
+Verbose logging: python XsSCan.py -u website.com -v
+Cookies: python XsSCan.py -u website.complex -c name=val name=val
+""" + color.END
+print color.BOLD + color.BLUE + """
+Description: XsSCan is a python tool for finding Cross Site Scripting
+vulnerabilities in websites. This tool is the first of its kind.
+Instead of just checking one page as most of the tools do, this tool
+traverses the website and find all the links and subdomains first.
+After that, it starts scanning each and every input on each and every
+ page that it found while its traversal. It uses small yet effective
+payloads to search for XSS vulnerabilities. XSS in many high
+profile websites and educational institutes has been found
+by using this very tool.
+""" + color.END
